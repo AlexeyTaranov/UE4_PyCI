@@ -28,6 +28,7 @@ build = '-archivedirectory=' + project.buildPath()
 build_args = [ue4paths.uat(), 'BuildCookRun', uproject, '-noP4', '-platform=Win64', '-clientconfig=Development',
               '-cook', '-allmaps', '-build', '-stage', '-pak', '-archive', build]
 start_proc(build_args)
+build_proc = subprocess.Popen(build_args)
 
 cook_args = [ue4paths.uat(), 'BuildCookRun', uproject, '-noP4', '-platform=Win64', '-clientconfig=Development',
              '-cook', '-allmaps', '-NoCompile', '-stage', '-pak', '-archive', build]
