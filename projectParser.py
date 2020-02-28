@@ -9,11 +9,9 @@ class BuildProjectInfo:
         parser.add_argument('-projectPath', type=str, dest='projectPath')
         parser.add_argument('-projectName', type=str, dest='projectName')
         parser.add_argument('-buildPath', type=str, dest='buildPath')
-        parser.add_argument('-configuration', type=int, dest='configuration')
+        parser.add_argument('-configuration', type=str, dest='configuration')
         parser.add_argument('-platform', type=str, dest='platform')
         self.args = parser.parse_args()
-        #self.checkAttr('projectPath')
-        #self.checkAttr('projectName')
 
     def checkAttr(self, atrname):
         if hasattr(self, atrname):
@@ -36,24 +34,18 @@ class BuildProjectInfo:
 
     def platform(self):
         if self.args.platform is None:
-            return Platform.Win64
-        if self.args.platform == 'Android':
-            return Platform.Android
-        elif self.args.platform == 'Win64':
-            return Platform.Win64
+            return 'Win64'
+        platformList = ['Win64', 'Android']
+        if self.args.platform in platformList:
+            return self.args.platform
+        else:
+            return 'Win64'
 
     def configuration(self):
         if self.args.configuration is None:
-            return Configuration.Shipping
-        return Configuration(self.args.configuration)
-
-
-class Platform(Enum):
-    Win64 = 0
-    Android = 1
-
-
-class Configuration(Enum):
-    DebugGame = 0
-    Development = 1
-    Shipping = 2
+            return 'Development'
+        configurationList = ['DebugGame', 'Development', 'Shipping']
+        if self.args.configuration in configurationList:
+            return self.args.configuration
+        else:
+            return 'Development'
