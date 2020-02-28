@@ -12,16 +12,19 @@ class BuildProjectInfo:
         parser.add_argument('-configuration', type=int, dest='configuration')
         parser.add_argument('-platform', type=str, dest='platform')
         self.args = parser.parse_args()
-        self.checkAttr('projectPath')
-        self.checkAttr('projectName')
+        #self.checkAttr('projectPath')
+        #self.checkAttr('projectName')
 
     def checkAttr(self, atrname):
         if hasattr(self, atrname):
             print('Need attribute -' + atrname)
             exit(1)
 
+    def projectPath(self):
+        return self.args.projectPath
+
     def solution(self):
-        return path.join(self.args.projectPath, self.args.projectName) + '_' + self.platform().name + '.sln'
+        return path.join(self.args.projectPath, self.args.projectName) + '.sln'
 
     def uproject(self):
         return path.join(self.args.projectPath, self.args.projectName) + '.uproject'
