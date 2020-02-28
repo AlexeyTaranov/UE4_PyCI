@@ -12,17 +12,15 @@ def start_proc(args):
 
 
 project = projectParser.BuildProjectInfo()
-platform = project.platform()
-configuration = project.configuration()
-platform_name = '-platform=' + platform.name
-configuration_name = '-configuration=' + configuration.name
+platform_name = '-platform=' + project.platform()
+configuration_name = '-configuration=' + project.configuration()
 
 uproject = '-project=' + projectParser.BuildProjectInfo().uproject()
 cook_args = [ue4paths.ubt(), uproject, '-projectfiles', '-game', 'progress']
 start_proc(cook_args)
 
-platform_name_verb = '/p:Platform=' + platform.name
-configuration_name_verb = '/p:Configuration=' + configuration.name
+platform_name_verb = '/p:Platform=' + project.platform()
+configuration_name_verb = '/p:Configuration=' + project.configuration()
 compile_args = [ue4paths.MSVC, project.solution(), r'/t:build', configuration_name_verb, platform_name_verb]
 start_proc(compile_args)
 
