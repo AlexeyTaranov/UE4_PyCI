@@ -11,6 +11,7 @@ class BuildProjectInfo:
         parser.add_argument('-buildPath', type=str, dest='buildPath')
         parser.add_argument('-configuration', type=str, dest='configuration')
         parser.add_argument('-platform', type=str, dest='platform')
+        parser.add_argument('-cookflavor', type=str, dest='cookflavor')
         self.args = parser.parse_args()
 
     def checkAttr(self, atrname):
@@ -49,3 +50,12 @@ class BuildProjectInfo:
             return self.args.configuration
         else:
             return 'Development'
+
+    def cookflavor(self):
+        if self.args.cookflavor is None:
+            return 'Multi'
+        cookList = ['ATC', 'DXT', 'ETC1', 'ETC1a', 'ETC2', 'PVRTC', 'ASTC', 'Multi']
+        if self.args.cookflavor in cookList:
+            return self.args.cookflavor
+        else:
+            return 'Multi'

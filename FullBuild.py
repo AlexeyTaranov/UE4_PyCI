@@ -15,7 +15,7 @@ project = projectParser.BuildProjectInfo()
 platform_name = '-platform=' + project.platform()
 configuration_name = '-configuration=' + project.configuration()
 
-uproject = '-project=' + projectParser.BuildProjectInfo().uproject()
+uproject = '-project=' + project.uproject()
 cook_args = [ue4paths.ubt(), uproject, '-projectfiles', '-game', 'progress']
 start_proc(cook_args)
 
@@ -25,7 +25,9 @@ compile_args = [ue4paths.MSVC, project.solution(), r'/t:build', configuration_na
 start_proc(compile_args)
 
 build = '-archivedirectory=' + project.buildPath()
-
+targetplatform = '-targetplatform=' + project.platform()
 cook_args = [ue4paths.uat(), 'BuildCookRun', uproject, '-noP4', '-cook', '-allmaps', '-build',
-             '-stage', '-pak', '-archive', build, platform_name, configuration_name]
+             '-stage', '-pak', '-archive', build, platform_name, configuration_name, targetplatform]
+if project.platform() == 'Android':
+    cook_args.append('-cookflavor=' + project.cookflavor())
 start_proc(cook_args)
