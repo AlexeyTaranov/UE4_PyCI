@@ -24,10 +24,14 @@ configuration_name_verb = '/p:Configuration=' + project.configuration()
 compile_args = [ue4paths.MSVC, project.solution(), r'/t:build', configuration_name_verb, platform_name_verb]
 start_proc(compile_args)
 
-build = '-archivedirectory=' + project.buildPath()
+
 targetplatform = '-targetplatform=' + project.platform()
 cook_args = [ue4paths.uat(), 'BuildCookRun', uproject, '-noP4', '-cook', '-allmaps', '-build',
-             '-stage', '-pak', '-archive', build, platform_name, configuration_name, targetplatform]
+             '-stage', '-pak', '-archive', platform_name, configuration_name, targetplatform]
+if project.buildPath() is not None:
+    build = '-archivedirectory=' + project.buildPath()
+    cook_args.append(build)
+
 if project.platform() == 'Android':
     cook_args.append('-cookflavor=' + project.cookflavor())
 start_proc(cook_args)

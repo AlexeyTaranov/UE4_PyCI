@@ -29,8 +29,6 @@ class BuildProjectInfo:
         return path.join(self.args.projectPath, self.args.projectName) + '.uproject'
 
     def buildPath(self):
-        if self.args.buildPath is None:
-            return r'C:\Builds'
         return self.args.buildPath
 
     def platform(self):
